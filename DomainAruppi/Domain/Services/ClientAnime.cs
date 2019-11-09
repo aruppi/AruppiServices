@@ -157,5 +157,40 @@ namespace Domain.Domain.Services
             return episode;
 
         }
+
+        public LastEpisodesAdd GetLastAnimes()
+        {
+
+            LastEpisodesAdd episode = new LastEpisodesAdd();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("LatestEpisodesAdded");
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        episode = JsonConvert.DeserializeObject<LastEpisodesAdd>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return episode;
+
+        }
     }
 }
