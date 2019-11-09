@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Domain\Interfaces\**" />
+    <Compile Remove="Infrastructure\**" />
+    <EmbeddedResource Remove="Domain\Interfaces\**" />
+    <EmbeddedResource Remove="Infrastructure\**" />
+    <None Remove="Domain\Interfaces\**" />
+    <None Remove="Infrastructure\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="GoogleTranslateFreeApi">
+      <HintPath>..\SolutionItem\GoogleTranslateFreeApi.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
