@@ -28,18 +28,18 @@ namespace AruppiApi.Controllers
             _client = new Client(_iconfiguration);
             _clientAnime = new ClientAnime(_iconfiguration);
         }
-        
+
         [HttpGet]
         public object Schedule(string day)
-        {           
+        {
             Schedule programacion = _client.Programacion();
 
-            return MapeoService.MapSchedule(programacion,day);           
+            return MapeoService.MapSchedule(programacion, day);
         }
 
         [HttpGet]
         public MoreInfo MoreInfo(string id)
-        {            
+        {
             if (id != null)
             {
                 MoreInfo moreInfo = _client.MoreInfo(ref id);
@@ -60,27 +60,27 @@ namespace AruppiApi.Controllers
 
         [HttpGet]
         public object News()
-        {            
+        {
 
-            var news =  _client.NewsAnime();
+            var news = _client.NewsAnime();
 
             return news;
         }
-          [HttpGet]
+        [HttpGet]
         public Wallpapers Wallpapers(string tag = "samurai", int pag = 0)
         {
-            Wallpapers images = _client.Wallpapers(tag,pag);
+            Wallpapers images = _client.Wallpapers(tag, pag);
 
             return images;
         }
-        
+
         [HttpGet]
-        public Seasons Season(string year,string seasons)
+        public Seasons Season(string year, string seasons)
         {
-            Seasons animes = _client.Seasons(seasons,year);
+            Seasons animes = _client.Seasons(seasons, year);
 
             return animes;
-        } 
+        }
         [HttpGet]
         public Ivoox Ivoox()
         {
@@ -89,10 +89,10 @@ namespace AruppiApi.Controllers
             return ivox;
         }
         [HttpGet]
-        public ListEpisodesAnime GetAnime(string name,int numPag = 1)
+        public ListEpisodesAnime GetAnime(string name, int numPag = 1)
         {
 
-            ListEpisodesAnime episodes = _clientAnime.GetAllEpisodes(ref name,numPag);
+            ListEpisodesAnime episodes = _clientAnime.GetAllEpisodes(ref name, numPag);
 
 
             return episodes;
@@ -101,7 +101,7 @@ namespace AruppiApi.Controllers
         public VideoAnime GetEpisode(string name, int numCap)
         {
 
-            VideoAnime episodes = _clientAnime.GetEpisode( name, numCap);
+            VideoAnime episodes = _clientAnime.GetEpisode(name, numCap);
 
 
             return episodes;
@@ -110,12 +110,18 @@ namespace AruppiApi.Controllers
         public LastEpisodesAdd GetLastEpisodes()
         {
             return _clientAnime.GetEpisodeFlv();
-          
+
         }
         [HttpGet]
-        public LastEpisodesAdd GetLastAnimes()
+        public LastAnimes GetLastAnimes()
         {
             return _clientAnime.GetLastAnimes();
+
+        }
+        [HttpGet]
+        public SearchAnimeFlv SearchAnimeFlv(string anime)
+        {
+            return _clientAnime.SearchAnimeFlv(anime);
 
         }
     }

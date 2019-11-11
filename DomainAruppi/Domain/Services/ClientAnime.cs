@@ -158,14 +158,14 @@ namespace Domain.Domain.Services
 
         }
 
-        public LastEpisodesAdd GetLastAnimes()
+        public LastAnimes GetLastAnimes()
         {
 
-            LastEpisodesAdd episode = new LastEpisodesAdd();
+            LastAnimes episode = new LastAnimes();
 
             using (HttpClient AruppiClient = new HttpClient())
             {
-                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("LatestEpisodesAdded");
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("LatestAnimeAdded");
 
                 AruppiClient.BaseAddress = new Uri(url);
 
@@ -180,7 +180,41 @@ namespace Domain.Domain.Services
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
 
-                        episode = JsonConvert.DeserializeObject<LastEpisodesAdd>(jsonString);
+                        episode = JsonConvert.DeserializeObject<LastAnimes>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return episode;
+
+        }
+        public SearchAnimeFlv SearchAnimeFlv(string anime)
+        {
+
+            SearchAnimeFlv episode = new SearchAnimeFlv();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("Search/{0}", anime);
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        episode = JsonConvert.DeserializeObject<SearchAnimeFlv>(jsonString);
 
                     }
                     catch (Exception ex)
