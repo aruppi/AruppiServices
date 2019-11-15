@@ -226,5 +226,71 @@ namespace Domain.Domain.Services
             return episode;
 
         }
+        public SerachServer SerachServerFlv(string id)
+        {
+
+            SerachServer servers = new SerachServer();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("GetAnimeServers/{0}", id);
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        servers = JsonConvert.DeserializeObject<SerachServer>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return servers;
+
+        }
+        public Natsuki TakeCorrectUrl(string url)
+        {
+
+            Natsuki servers = new Natsuki();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {               
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        servers = JsonConvert.DeserializeObject<Natsuki>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return servers;
+
+        }
     }
 }

@@ -124,5 +124,23 @@ namespace AruppiApi.Controllers
             return _clientAnime.SearchAnimeFlv(anime);
 
         }
+        [HttpGet]
+        public SerachServer SearchServersFlv(string id)
+        {
+            SerachServer server = new SerachServer();
+            server.servers = new List<ServerFlv>();
+            var servers = _clientAnime.SerachServerFlv(id);
+
+            foreach(var item in servers.servers)
+            {
+                if (item.server.Equals("natsuki"))
+                    item.url = _clientAnime.TakeCorrectUrl(item.code.Replace("embed", "check")).file;
+
+                server.servers.Add(item);
+            }
+
+            return server;
+
+        }
     }
 }
