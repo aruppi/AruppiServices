@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 
@@ -21,17 +22,17 @@ namespace Domain.Domain.Services
         {
             _iconfiguration = iconfiguration;
         }
-        public Schedule Programacion()
+        public async Task<ProgramacionOld> Programacion(string day)
         {
             using (HttpClient AruppiClient = new HttpClient())
             {
-                string url = _iconfiguration.GetSection("Keys").GetSection("UrlAnime").Value + string.Format("calender");
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value +  $"schedule/{day}"  ;
 
                 AruppiClient.BaseAddress = new Uri(url);
 
                 StringBuilder path = new StringBuilder(url);
 
-                Schedule respuesta = new Schedule();
+                ProgramacionOld respuesta = new ProgramacionOld();
 
 
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
@@ -41,12 +42,12 @@ namespace Domain.Domain.Services
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                        
-                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+                        HttpResponseMessage response = await AruppiClient.GetAsync(url);
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
 
                         if (response.IsSuccessStatusCode && response.StatusCode.Equals(System.Net.HttpStatusCode.OK))
-                            respuesta = JsonConvert.DeserializeObject<Schedule>(jsonString);
+                            respuesta = JsonConvert.DeserializeObject<ProgramacionOld>(jsonString);
                         else
                         {
                             throw new Exception();

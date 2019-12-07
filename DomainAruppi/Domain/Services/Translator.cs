@@ -74,7 +74,7 @@ namespace DomainAruppi.Domain.Services
 
         }
 
-        private async static System.Threading.Tasks.Task<List<Genre>> TranslateGenres(List<Genre> genres)
+        public async static System.Threading.Tasks.Task<List<Genre>> TranslateGenres(List<Genre> genres)
         {
             List<Genre> genresNew = new List<Genre>();
 

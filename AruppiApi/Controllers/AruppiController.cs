@@ -30,11 +30,17 @@ namespace AruppiApi.Controllers
         }
 
         [HttpGet]
-        public object Schedule(string day)
+        public async Task<object> Schedule(string day)
         {
-            Schedule programacion = _client.Programacion();
+            var programacion = await _client.Programacion(day);
 
-            return MapeoService.MapSchedule(programacion, day);
+            var day1 = await MapeoService.MapOldSchedule(programacion, day);
+
+
+            foreach(var item in day1.day)
+            item.genres = await TranslatorText.TranslateGenres(item.genres);
+
+            return day1;
         }
 
         [HttpGet]
@@ -140,6 +146,24 @@ namespace AruppiApi.Controllers
             }
 
             return server;
+
+        }
+        [HttpGet]
+        public Movies SearchMoviesFlv(string pag)
+        {
+            return _clientAnime.SearchMoviesFlv(pag);
+
+        }
+        [HttpGet]
+        public Ovas SearchOvasFlv(string pag)
+        {
+            return _clientAnime.SearchMoviesFlv(pag);
+
+        }
+        [HttpGet]
+        public Specials SearchSpecialsFlv()
+        {
+            return _clientAnime.SearchSpecialsFlv();
 
         }
     }

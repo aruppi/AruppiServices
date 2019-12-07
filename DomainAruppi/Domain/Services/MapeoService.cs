@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Domain.Domain.Entities;
 using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace DomainAruppi.Domain.Services
 {
@@ -19,7 +21,7 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
@@ -32,7 +34,7 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
@@ -44,7 +46,7 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
@@ -56,7 +58,7 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
@@ -68,7 +70,7 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
@@ -80,7 +82,7 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
@@ -92,13 +94,31 @@ namespace DomainAruppi.Domain.Services
                     {
                         Series series = new Series();
                         series.image_url = item.poster[i];
-                        series.mal_id = item.id[i];
+                        series.mal_id = Convert.ToInt32(item.id[i]);
                         series.title = item.title[i];
                         programacion.day.Add(series);
                     }
                 }
 
             return programacion;
+        }
+
+        public static async Task<Day> MapOldSchedule(ProgramacionOld schedule,string day)
+        {
+            var programacion = new Day();
+            programacion.day = new List<Series>();        
+
+            programacion.day = 
+            schedule.monday != null ? schedule.monday :
+            schedule.tuesday != null ? schedule.tuesday :
+            schedule.wednesday != null ? schedule.wednesday :
+            schedule.thursday != null ? schedule.thursday :
+            schedule.friday != null ?  schedule.friday :
+            schedule.saturday != null ?  schedule.saturday :
+            schedule.sunday;
+
+          return programacion; 
+
         }
 
     }

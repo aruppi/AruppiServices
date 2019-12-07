@@ -32,7 +32,6 @@ namespace Domain.Domain.Services
                 {
                     try
                     {
-
                         HttpResponseMessage response = AruppiClient.GetAsync(urlSearch).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -60,7 +59,6 @@ namespace Domain.Domain.Services
 
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
                 {
-
                     try
                     {
 
@@ -79,8 +77,6 @@ namespace Domain.Domain.Services
                     {
                         throw ex;
                     }
-
-
                 }
             }
 
@@ -89,7 +85,6 @@ namespace Domain.Domain.Services
 
         public VideoAnime GetEpisode(string name, int numCap)
         {
-
             VideoAnime episode = new VideoAnime();
 
             using (HttpClient AruppiClient = new HttpClient())
@@ -125,7 +120,6 @@ namespace Domain.Domain.Services
 
         public LastEpisodesAdd GetEpisodeFlv()
         {
-
             LastEpisodesAdd episode = new LastEpisodesAdd();
 
             using (HttpClient AruppiClient = new HttpClient())
@@ -155,12 +149,10 @@ namespace Domain.Domain.Services
                 }
             }
             return episode;
-
         }
 
         public LastAnimes GetLastAnimes()
         {
-
             LastAnimes episode = new LastAnimes();
 
             using (HttpClient AruppiClient = new HttpClient())
@@ -190,7 +182,6 @@ namespace Domain.Domain.Services
                 }
             }
             return episode;
-
         }
         public SearchAnimeFlv SearchAnimeFlv(string anime)
         {
@@ -224,6 +215,108 @@ namespace Domain.Domain.Services
                 }
             }
             return episode;
+
+        }
+        public Movies SearchMoviesFlv(string pag = "1")
+        {
+
+            Movies movies = new Movies();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("Movies/default/{0}", pag);
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        movies = JsonConvert.DeserializeObject<Movies>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return movies;
+
+        }
+        public Ovas SearchOvasFlv(string pag = "1")
+        {
+
+            Ovas ovas = new Ovas();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("Ova/default/{0}", pag);
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        ovas = JsonConvert.DeserializeObject<Ovas>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return ovas;
+
+        }
+        public Specials SearchSpecialsFlv(string pag = "1")
+        {
+
+            Specials specials = new Specials();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("Special/default/{0}", pag);
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        specials = JsonConvert.DeserializeObject<Specials>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return specials;
 
         }
         public SerachServer SerachServerFlv(string id)

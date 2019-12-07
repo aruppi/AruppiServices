@@ -14,11 +14,19 @@ namespace Domain.Domain.Entities
 
     public class Series
     {
-        public string mal_id { get; set; }      
+        public int mal_id { get; set; }
+
         public string title { get; set; }
         public string image_url { get; set; }
-      
-       
+
+        public string type { get; set; }
+
+        public int? episodes { get; set; }
+
+        public List<Genre> genres { get; set; }
+        public string source { get; set; }
+
+        public double? score { get; set; }
     }
 
 
