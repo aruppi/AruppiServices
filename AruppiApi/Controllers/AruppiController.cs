@@ -157,7 +157,7 @@ namespace AruppiApi.Controllers
         [HttpGet]
         public Ovas SearchOvasFlv(string pag)
         {
-            return _clientAnime.SearchMoviesFlv(pag);
+            return _clientAnime.SearchOvasFlv(pag);
 
         }
         [HttpGet]
