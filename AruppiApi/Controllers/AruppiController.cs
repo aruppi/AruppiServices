@@ -118,12 +118,7 @@ namespace AruppiApi.Controllers
             return _clientAnime.GetEpisodeFlv();
 
         }
-        [HttpGet]
-        public LastAnimes GetLastAnimes()
-        {
-            return _clientAnime.GetLastAnimes();
-
-        }
+        
         [HttpGet]
         public SearchAnimeFlv SearchAnimeFlv(string anime)
         {
