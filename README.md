@@ -7,14 +7,14 @@
 
 ### Schedule
 ### Api/Aruppi/Schedule
-####Params
+#### Params
 	Day
 
 El servicio devuelve la programación del día que le pidas, el día tiene que enviarse en ingles
 
 ### MoreInfo
 ### Api/Aruppi/MoreInfo
-####Params
+#### Params
 	id
 	
 El servicio devuelve la información del id correspondiente de la api de jinkanm
@@ -26,7 +26,7 @@ Devuelve las noticias de somoskudasai
 
 ### MoreInfo
 ### Api/Aruppi/Season
-####Params
+#### Params
 	year
 	seasons
 	
@@ -35,7 +35,7 @@ Devuelve los animes de un año y una temporada, ejemplo:
 
 ### GetAnime
 ### Api/Aruppi/GetAnime
-####Params
+#### Params
 	name
 	numPag
 Devuelve los capítulos de un anime, el numpag no es obligatorio en caso de que el anime tenga pocos capítulos
@@ -43,7 +43,7 @@ El json devuelto tiene la propiedad episodes_last_page que te dira cuantas pági
 
 ### GetEpisode
 ### Api/Aruppi/GetEpisode
-####Params
+#### Params
 	name
 	numCap
 
@@ -57,7 +57,7 @@ Devuelve los últimos episodios añadidos
 
 ### SearchAnimeFlv
 ### Api/Aruppi/SearchAnimeFlv
-####Params
+#### Params
 	name
 
 Devuelve anime, pelicula, etc de la serie que le pidas, ejemplo:
@@ -65,21 +65,21 @@ Devuelve anime, pelicula, etc de la serie que le pidas, ejemplo:
 
 ### SearchServersFlv
 ### Api/Aruppi/SearchServersFlv
-####Params
+#### Params
 	id
 
 Devuelve todos las urls de los capítulos de cada server
 
 ### SearchMoviesFlv
 ### Api/Aruppi/SearchMoviesFlv
-####Params
+#### Params
 	pag
 
 Devuelve las películas por páginas.
 
 ### SearchOvasFlv
 ### Api/Aruppi/SearchOvasFlv
-####Params
+#### Params
 	pag
 
 Devuelve las OVAS por páginas.
