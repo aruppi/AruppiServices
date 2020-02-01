@@ -161,5 +161,23 @@ namespace AruppiApi.Controllers
             return _clientAnime.SearchSpecialsFlv();
 
         }
+        [HttpGet]
+        public object GetLastMovies(int pag = 1)
+        {
+            return _clientAnime.GetLastMovies(pag);
+
+        }
+        [HttpGet]
+        public object GetLastSpecials(int pag = 1)
+        {
+            return _clientAnime.GetLastSpecials(pag);
+
+        }
+        [HttpGet]
+        public object GetLastOvas()
+        {
+            return _clientAnime.GetLastOvas();
+
+        }
     }
 }
