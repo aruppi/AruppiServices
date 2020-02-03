@@ -179,5 +179,23 @@ namespace AruppiApi.Controllers
             return _clientAnime.GetLastOvas();
 
         }
+        [HttpGet]
+        public object Rank(int num = 1)
+        {
+            return _client.Rank(num);
+
+        }
+        [HttpGet]
+        public async Task<FutureSeasons> FutureSeasons()
+        {
+            var response = _client.FutureSeasons();
+
+            //foreach (var item in response.anime)
+            //    item.genres = await TranslatorText.TranslateGenres(item.genres);
+
+
+            return response;
+
+        }
     }
 }

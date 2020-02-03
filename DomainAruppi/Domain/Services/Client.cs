@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 
 namespace Domain.Domain.Services
 {
-   public class Client
+    public class Client
     {
         IConfiguration _iconfiguration;
 
@@ -26,7 +26,7 @@ namespace Domain.Domain.Services
         {
             using (HttpClient AruppiClient = new HttpClient())
             {
-                string url = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value +  $"schedule/{day}"  ;
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + $"schedule/{day}";
 
                 AruppiClient.BaseAddress = new Uri(url);
 
@@ -41,7 +41,7 @@ namespace Domain.Domain.Services
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                       
+
                         HttpResponseMessage response = await AruppiClient.GetAsync(url);
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -65,7 +65,7 @@ namespace Domain.Domain.Services
 
         public MoreInfo MoreInfo(ref string id)
         {
-            
+
             using (HttpClient AruppiClient = new HttpClient())
             {
                 string urlSearch = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + string.Format("search/anime?q={0}", id);
@@ -73,7 +73,7 @@ namespace Domain.Domain.Services
 
                 StringBuilder path = new StringBuilder(urlSearch);
 
-                
+
 
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
                 {
@@ -119,7 +119,7 @@ namespace Domain.Domain.Services
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                        
+
                         HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -140,6 +140,81 @@ namespace Domain.Domain.Services
                 }
             }
         }
+        public object Rank(int num)
+        {
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string urlSearch = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + $"top/anime/{num}/upcoming";
+                AruppiClient.BaseAddress = new Uri(urlSearch);
+
+                StringBuilder path = new StringBuilder(urlSearch);
+
+
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+
+
+                        HttpResponseMessage response = AruppiClient.GetAsync(urlSearch).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        if (response.IsSuccessStatusCode && response.StatusCode.Equals(System.Net.HttpStatusCode.OK))
+                            return JsonConvert.DeserializeObject<object>(jsonString);
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+
+        }
+        public FutureSeasons FutureSeasons()
+        {
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string urlSearch = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + $"season/later";
+                AruppiClient.BaseAddress = new Uri(urlSearch);
+
+                StringBuilder path = new StringBuilder(urlSearch);
+
+
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+
+
+                        HttpResponseMessage response = AruppiClient.GetAsync(urlSearch).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        if (response.IsSuccessStatusCode && response.StatusCode.Equals(System.Net.HttpStatusCode.OK))
+                            return JsonConvert.DeserializeObject<FutureSeasons>(jsonString);
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+        }
         public List<Character> Characters(string id)
         {
             using (HttpClient AruppiClient = new HttpClient())
@@ -151,14 +226,14 @@ namespace Domain.Domain.Services
                 StringBuilder path = new StringBuilder(url);
 
                 MoreInfo respuesta = new MoreInfo();
-            
+
                 using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
                 {
 
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                        
+
                         HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -200,7 +275,7 @@ namespace Domain.Domain.Services
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                       
+
                         HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -242,7 +317,7 @@ namespace Domain.Domain.Services
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                       
+
                         HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -265,13 +340,13 @@ namespace Domain.Domain.Services
                     return respuesta;
                 }
             }
-        }        
+        }
 
-        public Seasons Seasons(string seasons,string year)
+        public Seasons Seasons(string seasons, string year)
         {
             using (HttpClient AruppiClient = new HttpClient())
             {
-                string url = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + string.Format("season/{0}/{1}", year,seasons);
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + string.Format("season/{0}/{1}", year, seasons);
 
                 AruppiClient.BaseAddress = new Uri(url);
 
@@ -287,7 +362,7 @@ namespace Domain.Domain.Services
                     try
                     {
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                      
+
                         HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
@@ -308,7 +383,7 @@ namespace Domain.Domain.Services
                 }
             }
         }
-        public Wallpapers Wallpapers(string tag,int pag)
+        public Wallpapers Wallpapers(string tag, int pag)
         {
             using (HttpClient AruppiClient = new HttpClient())
             {
@@ -326,7 +401,7 @@ namespace Domain.Domain.Services
 
                     try
                     {
-                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;                       
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                         HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
 
                         string jsonString = response.Content.ReadAsStringAsync().Result;
