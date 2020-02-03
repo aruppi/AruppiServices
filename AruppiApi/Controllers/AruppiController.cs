@@ -186,7 +186,7 @@ namespace AruppiApi.Controllers
 
         }
         [HttpGet]
-        public async Task<FutureSeasons> FutureSeasons()
+        public FutureSeasons FutureSeasons()
         {
             var response = _client.FutureSeasons();
 
