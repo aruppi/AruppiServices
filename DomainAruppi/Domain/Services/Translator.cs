@@ -26,7 +26,7 @@ namespace DomainAruppi.Domain.Services
                     string[] broadCas = moreInfo.broadcast.Split(new string[] { " " }, StringSplitOptions.None);
                     moreInfo.broadcast = await (TranslateText(broadCas[0])) + " " + broadCas[broadCas.Length - 2] + " " + broadCas[broadCas.Length - 1];
                 }
-                else if (moreInfo.broadcast.Contains("Unknown"))
+                else if (moreInfo.broadcast != null && moreInfo.broadcast.Contains("Unknown"))
                 {
                     string[] broadCas = moreInfo.broadcast.Split(new string[] { " " }, StringSplitOptions.None);
                     moreInfo.broadcast = await (TranslateText(broadCas[0]));

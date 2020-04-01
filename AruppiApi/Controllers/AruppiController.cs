@@ -63,6 +63,26 @@ namespace AruppiApi.Controllers
                 return null;
             }
         }
+        [HttpGet]
+        public MoreInfo MovieInfo(string id)
+        {
+            if (id != null)
+            {
+                MoreInfo moreInfo = _client.MovieInfo(id);
+
+                moreInfo.characters = _client.Characters(id);
+
+                moreInfo.pictures = _client.Pictures(id);
+
+                moreInfo = (TranslatorText.Translate(moreInfo)).Result;
+
+                return moreInfo;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         [HttpGet]
         public object News()

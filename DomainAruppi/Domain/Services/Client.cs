@@ -140,6 +140,49 @@ namespace Domain.Domain.Services
                 }
             }
         }
+        public MoreInfo MovieInfo(string id)
+        {         
+
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlBase").Value + string.Format("anime/{0}", id);
+
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                MoreInfo respuesta = new MoreInfo();
+
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        if (response.IsSuccessStatusCode && response.StatusCode.Equals(System.Net.HttpStatusCode.OK))
+                            respuesta = JsonConvert.DeserializeObject<MoreInfo>(jsonString);
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+
+                    return respuesta;
+                }
+            }
+        }
         public object Rank(int num)
         {
 
