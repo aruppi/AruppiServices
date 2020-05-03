@@ -68,15 +68,21 @@ namespace AruppiApi.Controllers
         {
             if (id != null)
             {
-                MoreInfo moreInfo = _client.MovieInfo(id);
+                try
+                {
+                    MoreInfo moreInfo = _client.MovieInfo(id);
 
-                moreInfo.characters = _client.Characters(id);
+                    moreInfo.characters = _client.Characters(id);
 
-                moreInfo.pictures = _client.Pictures(id);
+                    moreInfo.pictures = _client.Pictures(id);
 
-                moreInfo = (TranslatorText.Translate(moreInfo)).Result;
+                    moreInfo = (TranslatorText.Translate(moreInfo)).Result;
 
-                return moreInfo;
+                    return moreInfo;
+                }catch(Exception ex)
+                {
+                    throw ex;
+                }
             }
             else
             {
@@ -145,6 +151,13 @@ namespace AruppiApi.Controllers
             return _clientAnime.SearchAnimeFlv(anime);
 
         }
+
+        [HttpGet]
+        public SearchBuscadorAnime SearchBuscadorAnime(string anime)
+        {
+            return _clientAnime.SearchBuscadorAnime(anime);
+        }
+
         [HttpGet]
         public SerachServer SearchServersFlv(string id)
         {
@@ -154,10 +167,17 @@ namespace AruppiApi.Controllers
 
             foreach(var item in servers.servers)
             {
-                if (item.server.Equals("natsuki"))
-                    item.url = _clientAnime.TakeCorrectUrl(item.code.Replace("embed", "check")).file;
+                
+                //if (item.server.Equals("natsuki"))
+                //    item.url = _clientAnime.TakeCorrectUrl(item.code.Replace("embed", "check")).file;
 
-                server.servers.Add(item);
+                if (item.server.Equals("mega"))
+                {
+
+                    server.servers.Add(item);
+
+                }
+                
             }
 
             return server;

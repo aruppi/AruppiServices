@@ -18,6 +18,6 @@ public class SearchFlv
 public class EpisodeSearch
 {
     public string nextEpisodeDate { get; set; }
-    public int episode { get; set; }
+    public string episode { get; set; }
     public string id { get; set; }
 }

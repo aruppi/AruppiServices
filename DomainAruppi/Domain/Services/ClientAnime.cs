@@ -185,6 +185,40 @@ namespace Domain.Domain.Services
             return episode;
 
         }
+        public SearchBuscadorAnime SearchBuscadorAnime(string anime)
+        {
+
+            SearchBuscadorAnime episode = new SearchBuscadorAnime();
+
+            using (HttpClient AruppiClient = new HttpClient())
+            {
+                string url = _iconfiguration.GetSection("Keys").GetSection("UrlFlv").Value + string.Format("Search/{0}", anime);
+
+                AruppiClient.BaseAddress = new Uri(url);
+
+                StringBuilder path = new StringBuilder(url);
+
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, new Uri(path.ToString())))
+                {
+
+                    try
+                    {
+                        HttpResponseMessage response = AruppiClient.GetAsync(url).Result;
+
+                        string jsonString = response.Content.ReadAsStringAsync().Result;
+
+                        episode = JsonConvert.DeserializeObject<SearchBuscadorAnime>(jsonString);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            return episode;
+
+        }
         public Movies SearchMoviesFlv(string pag = "1")
         {
 
