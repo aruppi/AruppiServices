@@ -36,9 +36,15 @@ namespace AruppiApi.Controllers
 
             var day1 = await MapeoService.MapOldSchedule(programacion, day);
 
-
-            foreach(var item in day1.day)
-            item.genres = await TranslatorText.TranslateGenres(item.genres);
+            try
+            {
+                foreach (var item in day1.day)
+                    item.genres = await TranslatorText.TranslateGenres(item.genres);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
             return day1;
         }
@@ -53,8 +59,14 @@ namespace AruppiApi.Controllers
                 moreInfo.characters = _client.Characters(id);
 
                 moreInfo.pictures = _client.Pictures(id);
-
-                moreInfo = (TranslatorText.Translate(moreInfo)).Result;
+                try
+                {
+                    moreInfo = (TranslatorText.Translate(moreInfo)).Result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
 
                 return moreInfo;
             }
@@ -75,11 +87,17 @@ namespace AruppiApi.Controllers
                     moreInfo.characters = _client.Characters(id);
 
                     moreInfo.pictures = _client.Pictures(id);
-
-                    moreInfo = (TranslatorText.Translate(moreInfo)).Result;
-
+                    try
+                    {
+                        moreInfo = (TranslatorText.Translate(moreInfo)).Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
                     return moreInfo;
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     throw ex;
                 }
@@ -144,7 +162,7 @@ namespace AruppiApi.Controllers
             return _clientAnime.GetEpisodeFlv();
 
         }
-        
+
         [HttpGet]
         public SearchAnimeFlv SearchAnimeFlv(string anime)
         {
@@ -165,9 +183,9 @@ namespace AruppiApi.Controllers
             server.servers = new List<ServerFlv>();
             var servers = _clientAnime.SerachServerFlv(id);
 
-            foreach(var item in servers.servers)
+            foreach (var item in servers.servers)
             {
-                
+
                 //if (item.server.Equals("natsuki"))
                 //    item.url = _clientAnime.TakeCorrectUrl(item.code.Replace("embed", "check")).file;
 
@@ -177,7 +195,7 @@ namespace AruppiApi.Controllers
                     server.servers.Add(item);
 
                 }
-                
+
             }
 
             return server;
